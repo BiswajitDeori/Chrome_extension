@@ -76,6 +76,15 @@
       transition: background-color 0.3s ease;
     }
 
+    .grid-container {
+    display: grid;
+    grid-template-columns: auto auto ;
+    }
+    .grid-item {
+    border: 1px;
+    text-align: center;
+    }
+    
     button:hover {
       background-color: #45a049;
     }
@@ -102,12 +111,17 @@
 </head>
 <body>
   <div class="tabs">
-    <div class="tab active" data-tab="tab-1">Product Insert</div>
+    <div class="tab active" data-tab="tab-1">
+       Product Insert</div>
     <div class="tab" data-tab="tab-2">Wish List Products</div>
   </div>
 
   <div id="tab-1" class="tab-content active">
-    <h1>Shopping Price Tracker</h1>
+    <div class="grid-container"> 
+        <div class="grid-item"><img src="images/sample.png"  width="54px" height="60px"/> </div>
+        <div class="grid-item"><h1>Shopping Tracker</h1></div>
+    </div>
+
     <form id="price-tracker-form">
       <label for="product-url">Product URL:</label>
       <input type="text" id="product-url" required>
