@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
           .then(productData => {
 
             console.log("product details",productData)
-            products.push({ url: productUrl, desiredPrice: desiredPrice, currentPrice: productData.price, imageUrl: productData.imageUrl });
+            products.push({ url: productUrl, desiredPrice: desiredPrice, currentPrice: productData.price, imageUrl: productData.imageUrl ,productName:productData.Name });
             chrome.storage.sync.set({ products: products }, function() {
 
-              alert('Price tracking started!');
+              alert('Product inseted to wish List!');
               loadProductList();
             });
           })
@@ -47,24 +47,23 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(html => {
             debugger;
 
-            console.log("html image",html);
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, 'text/html');
-          const priceElement = doc.querySelector('.a-price-whole').textContent;
+          const Name  =  doc.querySelector('#productTitle').textContent;
+          const priceElement = doc.querySelector('.a-price-whole');
           const imageElement = doc.querySelector('#imgTagWrapperId img');
   
           const price = priceElement ? parseFloat(priceElement.innerText.replace(/[^\d.]/g, '')) : null;
           const imageUrl = imageElement ? imageElement.src : 'Image not found';
   
-          return { price, imageUrl };
+          return { Name,price, imageUrl };
         });
     }
   
     function loadProductList() {
 
-        debugger;
-
       chrome.storage.sync.get({ products: [] }, function(data) {
+        debugger;
         const productList = document.getElementById('product-list');
         productList.innerHTML = '';
   
