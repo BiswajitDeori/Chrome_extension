@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("html image",html);
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, 'text/html');
-          const priceElement = doc.querySelector('#priceblock_ourprice, #priceblock_dealprice');
+          const priceElement = doc.querySelector('.a-price-whole').textContent;
           const imageElement = doc.querySelector('#imgTagWrapperId img');
   
           const price = priceElement ? parseFloat(priceElement.innerText.replace(/[^\d.]/g, '')) : null;
