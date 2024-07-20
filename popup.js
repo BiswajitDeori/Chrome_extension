@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('price-tracker-form').addEventListener('submit', function(event) {
         debugger;
       event.preventDefault();
-  
+
+      document.getElementById('price_submit').hidden = true;
+      document.getElementById('loader').hidden = false;
+
       const productUrl = document.getElementById('product-url').value;
       const desiredPrice = parseFloat(document.getElementById('desired-price').value);
   
@@ -31,8 +34,16 @@ document.addEventListener('DOMContentLoaded', function() {
             products.push({ url: productUrl, desiredPrice: desiredPrice, currentPrice: productData.price, imageUrl: productData.imageUrl ,productName:productData.Name });
             chrome.storage.sync.set({ products: products }, function() {
 
-              alert('Product inseted to wish List!');
-              loadProductList();
+              
+            document.getElementById('price_submit').hidden = false;
+            document.getElementById('loader').hidden = true;
+
+            document.getElementById('added_message').hidden=false;
+
+            setTimeout(() => {
+                document.getElementById('added_message').hidden = true;
+              }, 2000); // 2000 milliseconds = 2 seconds
+            loadProductList();
             });
           })
           .catch(error => {
