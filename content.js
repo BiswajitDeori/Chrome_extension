@@ -1,4 +1,5 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    debugger;
     if (request.action === 'getProductData') {
       const priceElement = document.querySelector('#priceblock_ourprice, #priceblock_dealprice');
       const imageElement = document.querySelector('#imgTagWrapperId img');

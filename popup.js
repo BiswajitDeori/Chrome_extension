@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    debugger;
     const tabs = document.querySelectorAll('.tab');
     const tabContents = document.querySelectorAll('.tab-content');
   
@@ -13,42 +14,56 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   
     document.getElementById('price-tracker-form').addEventListener('submit', function(event) {
+        debugger;
       event.preventDefault();
-      
+  
       const productUrl = document.getElementById('product-url').value;
       const desiredPrice = parseFloat(document.getElementById('desired-price').value);
-      
+  
       chrome.storage.sync.get({ products: [] }, function(data) {
         const products = data.products;
+        debugger;
   
-        chrome.tabs.create({ url: productUrl, active: false }, function(tab) {
-          chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            function: getProductData
-          }, (results) => {
-            const productData = results[0].result;
+        fetchProductData(productUrl)
+          .then(productData => {
+
+            console.log("product details",productData)
             products.push({ url: productUrl, desiredPrice: desiredPrice, currentPrice: productData.price, imageUrl: productData.imageUrl });
             chrome.storage.sync.set({ products: products }, function() {
+
               alert('Price tracking started!');
               loadProductList();
-              chrome.tabs.remove(tab.id);
             });
+          })
+          .catch(error => {
+            console.error('Error fetching product data:', error);
           });
-        });
       });
     });
   
-    function getProductData() {
-      const priceElement = document.querySelector('#priceblock_ourprice, #priceblock_dealprice');
-      const imageElement = document.querySelector('#imgTagWrapperId img');
+    function fetchProductData(url) {
+      return fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            debugger;
+
+            console.log("html image",html);
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const priceElement = doc.querySelector('#priceblock_ourprice, #priceblock_dealprice');
+          const imageElement = doc.querySelector('#imgTagWrapperId img');
   
-      const price = priceElement ? parseFloat(priceElement.innerText.replace(/[^\d.]/g, '')) : null;
-      const imageUrl = imageElement ? imageElement.src : 'Image not found';
+          const price = priceElement ? parseFloat(priceElement.innerText.replace(/[^\d.]/g, '')) : null;
+          const imageUrl = imageElement ? imageElement.src : 'Image not found';
   
-      return { price, imageUrl };
+          return { price, imageUrl };
+        });
     }
   
     function loadProductList() {
+
+        debugger;
+
       chrome.storage.sync.get({ products: [] }, function(data) {
         const productList = document.getElementById('product-list');
         productList.innerHTML = '';
@@ -58,18 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
           li.textContent = `URL: ${product.url}, Desired Price: $${product.desiredPrice}`;
           productList.appendChild(li);
   
-          fetch(product.url)
-            .then(response => response.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(html, 'text/html');
-              const priceElement = doc.querySelector('#priceblock_ourprice, #priceblock_dealprice');
-              const imageElement = doc.querySelector('#imgTagWrapperId img');
-              
-              if (priceElement) {
-                const price = parseFloat(priceElement.innerText.replace(/[^\d.]/g, ''));
-                const imageUrl = imageElement ? imageElement.src : 'Image not found';
+          fetchProductData(product.url)
+            .then(productData => {
+              const price = productData.price;
+              const imageUrl = productData.imageUrl;
   
+              if (price !== null) {
                 li.textContent += `, Current Price: $${price}`;
                 li.innerHTML += `<br><img src="${imageUrl}" alt="Product Image">`;
               } else {
