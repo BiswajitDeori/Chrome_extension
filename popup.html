@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Price Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 1.2rem;
+      width: 310px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tabs {
+      display: flex;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      background-color: #ddd;
+      border: 1px solid #ccc;
+    }
+
+    .tab.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+      width: 100%;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    label {
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.8em;
+      color: #aaa;
+    }
+
+    .product-list {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+    }
+
+    .product-list li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs">
+    <div class="tab active" data-tab="tab-1">Product Insert</div>
+    <div class="tab" data-tab="tab-2">Wish List Products</div>
+  </div>
+
+  <div id="tab-1" class="tab-content active">
+    <h1>Shopping Price Tracker</h1>
+    <form id="price-tracker-form">
+      <label for="product-url">Product URL:</label>
+      <input type="text" id="product-url" required>
+      <label for="desired-price">Desired Price:</label>
+      <input type="number" id="desired-price" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div id="tab-2" class="tab-content">
+    <h1>Tracked Products</h1>
+    <ul id="product-list" class="product-list"></ul>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
