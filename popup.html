@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Price Tracker</title>
@@ -8,15 +9,15 @@
       margin: 0;
       padding: 1.2rem;
       width: 310px;
-      height: 250px;
+      height: 400px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     .tabs {
-        display: grid;
-        grid-template-columns: auto 2px auto ;
+      display: grid;
+      grid-template-columns: auto 2px auto;
       width: 100%;
       margin-bottom: 10px;
     }
@@ -29,7 +30,6 @@
       background-color: #ddd;
       border: 1px solid #ccc;
       border-radius: 20px;
-
     }
 
     .tab.active {
@@ -78,15 +78,6 @@
       transition: background-color 0.3s ease;
     }
 
-    .grid-container {
-    display: grid;
-    grid-template-columns: auto auto ;
-    }
-    .grid-item {
-    border: 1px;
-    text-align: center;
-    }
-    
     button:hover {
       background-color: #3e65a4;
     }
@@ -98,31 +89,64 @@
     }
 
     .product-list {
-      list-style: none;
-      padding: 0;
+      display: flex;
+      flex-direction: column;
       width: 100%;
+      padding: 0;
     }
 
-    .product-list li {
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
+    .product-card {
       display: flex;
-      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      width: calc(100% - 20px);
+      position: relative;
+    }
+
+    .product-card img {
+      max-width: 50px;
+      max-height: 50px;
+      margin-right: 10px;
+    }
+
+    .product-details {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-details p {
+      margin: 2px 0;
+      font-size: 14px;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: red;
+      font-size: 18px;
     }
   </style>
 </head>
 <body>
   <div class="tabs">
-    <div class="tab active" data-tab="tab-1">
-       Product Insert</div>
-       <div></div>
+    <div class="tab active" data-tab="tab-1">Product Insert</div>
+    <div></div>
     <div class="tab" data-tab="tab-2">Wish List Products</div>
   </div>
 
   <div id="tab-1" class="tab-content active">
     <div class="grid-container"> 
-        <div class="grid-item"><img src="images/sample.png"  width="54px" height="60px"/> </div>
-        <div class="grid-item"><h1>Shopping Tracker</h1></div>
+      <div class="grid-item"><img src="images/sample.png" width="54px" height="60px"/></div>
+      <div class="grid-item"><h1>Shopping Tracker</h1></div>
     </div>
 
     <form id="price-tracker-form">
@@ -136,7 +160,7 @@
 
   <div id="tab-2" class="tab-content">
     <h1>Tracked Products</h1>
-    <ul id="product-list" class="product-list"></ul>
+    <div id="product-list" class="product-list"></div>
   </div>
   <script src="popup.js"></script>
 </body>
