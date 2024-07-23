@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(() => {
     debugger;
-    chrome.alarms.create('checkPrice', { periodInMinutes: 120 });
+    chrome.alarms.create('checkPrice', { periodInMinutes: 1 });
   });
   
   chrome.alarms.onAlarm.addListener((alarm) => {
@@ -18,20 +18,16 @@ chrome.runtime.onInstalled.addListener(() => {
         fetch(product.url)
           .then(response => response.text())
           .then(html => {
-            debugger;
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const priceElement = doc.querySelector('#priceblock_ourprice, #priceblock_dealprice');
-            const imageElement = doc.querySelector('#imgTagWrapperId img');
-  
-            if (priceElement) {
-              const price = parseFloat(priceElement.innerText.replace(/[^\d.]/g, ''));
-              const imageUrl = imageElement ? imageElement.src : 'Image not found';
-  
+           
+            const price = extractPrice(html);
+
+            if (price) { 
+              const Imageurl = extractImageUrl(html);
+            
               if (price <= product.desiredPrice) {
                 chrome.notifications.create(`priceAlert-${index}`, {
                   type: 'basic',
-                  iconUrl: imageUrl,
+                  iconUrl: Imageurl,
                   title: 'Price Alert',
                   message: `The price of your tracked product is now $${price}!`
                 });
@@ -43,3 +39,29 @@ chrome.runtime.onInstalled.addListener(() => {
     });
   }
   
+
+  function extractPrice(html) {
+    // Regular expression to match the price inside the element with class "a-price-whole"
+    const priceRegex = /class="a-price-whole"[^>]*>([\d,.]+)<\/span>/;
+    const match = html.match(priceRegex);
+    
+    if (match && match[1]) {
+      // Remove any commas and convert to a number
+      const priceText = match[1].replace(/,/g, '');
+      return parseFloat(priceText);
+    }
+    
+    return null;
+  }
+
+  function extractImageUrl(html) {
+    // Regular expression to match the src attribute of the img tag within the element with ID imgTagWrapperId
+    const imageRegex = /id="imgTagWrapperId"[^>]*>[^<]*<img[^>]*src="([^"]*)"/;
+    const match = html.match(imageRegex);
+    
+    if (match && match[1]) {
+      return match[1]; // Return the URL of the image
+    }
+    
+    return 'Image not found'; // Default message if image URL is not found
+  }
