@@ -9,7 +9,7 @@
       margin: 0;
       padding: 1.2rem;
       width: 310px;
-      height: 400px;
+      height: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -89,19 +89,6 @@
       color: #aaa;
     }
 
-    #loader {
-  width: 120px;
-  height: 10px;
-  -webkit-mask:linear-gradient(90deg,#000 70%,#0000 0) 0/20%;
-  background:
-   linear-gradient(#4CAF50 0 0) 0/0% no-repeat
-   #ddd;
-  animation: l4 2s infinite steps(6);
-}
-@keyframes l4 {
-    100% {background-size:120%}
-}
-
     .product-list {
       display: flex;
       flex-direction: column;
@@ -148,6 +135,60 @@
       color: red;
       font-size: 18px;
     }
+
+    .grid-container {
+    display: grid;
+    grid-template-columns: auto auto ;
+    }
+    .grid-item {
+    border: 1px;
+    text-align: center;
+    }
+
+    
+    #loader {
+ 
+      width: 120px;
+     height: 10px;
+     -webkit-mask:linear-gradient(90deg,#000 70%,#0000 0) 0/20%;
+     background:
+     linear-gradient(#4CAF50 0 0) 0/0% no-repeat
+      #ddd;
+     animation: l4 2s infinite steps(6);
+   }
+
+   
+
+
+  @keyframes l4 {
+    100% {background-size:120%}
+    }
+
+     
+    .input-container {
+    width: 94%;
+    position: relative;
+    display: inline-block;
+    margin-left: 26px;
+}
+
+.currency-symbol {
+    position: absolute;
+    top: 30%;
+    left: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Allows clicking through the symbol */
+}
+
+#desired-price {
+    padding-left: 20px; /* Adjust to accommodate the width of the currency symbol */
+}
+
+#tab-2
+{
+  min-height: 310px;
+  max-height: 420px;
+}
   </style>
 </head>
 <body>
@@ -167,7 +208,10 @@
       <label for="product-url">Product URL:</label>
       <input type="text" id="product-url" required>
       <label for="desired-price">Desired Price:</label>
-      <input type="number" id="desired-price" required>
+      <div class="input-container">
+        <span class="currency-symbol">₹</span>
+        <input type="number" id="desired-price" required>
+    </div>
       <button  id="price_submit" type="submit">Submit</button>
       <div id="loader" hidden="true"> </div>
       <br>
@@ -176,7 +220,10 @@
   </div>
 
   <div id="tab-2" class="tab-content">
-    <h1>Tracked Products</h1>
+    <div class="grid-container"> 
+      <div class="grid-item"><img src="images/wish_list.png" width="54px" height="35px"/></div>
+      <div class="grid-item"><h2>Tracker Wishlist Product</h2></div>
+    </div>
     <div id="product-list" class="product-list"></div>
   </div>
   <script src="popup.js"></script>
