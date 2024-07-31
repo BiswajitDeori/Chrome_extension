@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Price Tracker</title>
+  <title>Amazon Price Tracker</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -200,8 +200,8 @@
 
   <div id="tab-1" class="tab-content active">
     <div class="grid-container"> 
-      <div class="grid-item"><img src="images/sample.png" width="54px" height="60px"/></div>
-      <div class="grid-item"><h1>Shopping Tracker</h1></div>
+      <div class="grid-item"><img src="images/sample128.png" width="54px" height="60px"/></div>
+      <div class="grid-item"><h1 style="font-size: medium; margin-right:10%;">Amazon Shopping Tracker</h1></div>
     </div>
 
     <form id="price-tracker-form">
@@ -209,7 +209,7 @@
       <input type="text" id="product-url" required>
       <label for="desired-price">Desired Price:</label>
       <div class="input-container">
-        <span class="currency-symbol">₹</span>
+        <span class="currency-symbol"></span>
         <input type="number" id="desired-price" required>
     </div>
       <button  id="price_submit" type="submit">Submit</button>
@@ -222,7 +222,7 @@
   <div id="tab-2" class="tab-content">
     <div class="grid-container"> 
       <div class="grid-item"><img src="images/wish_list.png" width="54px" height="35px"/></div>
-      <div class="grid-item"><h2>Tracker Wishlist Product</h2></div>
+      <div class="grid-item"><h2>Track Wishlist Products</h2></div>
     </div>
     <div id="product-list" class="product-list"></div>
   </div>

@@ -1,5 +1,5 @@
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.alarms.create('checkPrice', { periodInMinutes: 1 });
+  chrome.alarms.create('checkPrice', { periodInMinutes: 60 });
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {

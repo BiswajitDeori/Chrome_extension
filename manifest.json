@@ -1,40 +1,39 @@
 {
-    "manifest_version": 3,
-    "name": "Amazon Price Tracker",
-    "version": "1.0",
-    "description": "Track Amazon product prices and get notifications when they drop.",
-    "permissions": [
-        "storage",
-        "notifications",
-        "alarms",
-        "activeTab",
-        "scripting",
-        "webRequest",
-        "webRequestBlocking",
-        "https://www.amazon.com/*",
-        "https://www.amazon.in/*"
-      ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "action": {
-      "default_popup": "popup.html",
-      "default_icon": {
-        "16": "images/sample.png",
-        "48": "images/sample.png",
-        "128": "images/sample.png"
-      }
-    },
-    "icons": {
-      "16": "images/sample.png",
-      "48": "images/sample.png",
-      "128": "images/sample.png"
-    },
-    "content_scripts": [
-      {
-        "matches": ["*://*.amazon.in/*"],
-        "js": ["content.js"]
-      }
-    ]
-  }
-  
+  "manifest_version": 3,
+  "name": "Amazon Price Tracker",
+  "version": "1.1",
+  "description": "Track Amazon product prices and get notifications when they drop.",
+  "permissions": [
+      "storage",
+      "notifications",
+      "alarms",
+      "https://www.amazon.com/*",
+      "https://www.amazon.in/*"
+    ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/sample16.png",
+      "48": "images/sample48.png",
+      "128": "images/sample128.png"
+    }
+  },
+  "icons": {
+    "16": "images/sample16.png",
+    "48": "images/sample48.png",
+    "128": "images/sample128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.amazon.in/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["images/sample16.png", "images/sample48.png", "images/sample128.png", "images/wish_list"],
+    "matches": ["://.amazon.in/*", "*://.amazon.com/"]
+}]
+}
