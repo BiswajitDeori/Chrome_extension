@@ -34,6 +34,6 @@
   ],
   "web_accessible_resources": [{
     "resources": ["images/sample16.png", "images/sample48.png", "images/sample128.png", "images/wish_list"],
-    "matches": ["://.amazon.in/*", "*://.amazon.com/"]
+    "matches": ["*://*.amazon.in/*"]
 }]
 }
