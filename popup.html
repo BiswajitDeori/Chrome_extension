@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Price Tracker</title>
+  <title>Amazon Price Tracker</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -8,15 +9,15 @@
       margin: 0;
       padding: 1.2rem;
       width: 310px;
-      height: 250px;
+      height: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     .tabs {
-        display: grid;
-        grid-template-columns: auto 2px auto ;
+      display: grid;
+      grid-template-columns: auto 2px auto;
       width: 100%;
       margin-bottom: 10px;
     }
@@ -29,7 +30,6 @@
       background-color: #ddd;
       border: 1px solid #ccc;
       border-radius: 20px;
-
     }
 
     .tab.active {
@@ -71,7 +71,6 @@
     button {
       padding: 10px 20px;
       background-color: #4CAF50;
-      
       color: white;
       border: none;
       border-radius: 4px;
@@ -80,15 +79,6 @@
       border-radius: 12px;
     }
 
-    .grid-container {
-    display: grid;
-    grid-template-columns: auto auto ;
-    }
-    .grid-item {
-    border: 1px;
-    text-align: center;
-    }
-    
     button:hover {
       background-color: #54c358;
     }
@@ -100,53 +90,128 @@
     }
 
     .product-list {
-      list-style: none;
-      padding: 0;
-      width: 100%;
-    }
-
-    .product-list li {
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      width: 100%;
+      padding: 0;
     }
 
-#loader {
-  width: 120px;
-  height: 10px;
-  -webkit-mask:linear-gradient(90deg,#000 70%,#0000 0) 0/20%;
-  background:
-   linear-gradient(#4CAF50 0 0) 0/0% no-repeat
-   #ddd;
-  animation: l4 2s infinite steps(6);
-}
-@keyframes l4 {
+    .product-card {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      width: calc(100% - 20px);
+      position: relative;
+    }
+
+    .product-card img {
+      max-width: 50px;
+      max-height: 50px;
+      margin-right: 10px;
+    }
+
+    .product-details {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-details p {
+      margin: 2px 0;
+      font-size: 14px;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: red;
+      font-size: 18px;
+    }
+
+    .grid-container {
+    display: grid;
+    grid-template-columns: auto auto ;
+    }
+    .grid-item {
+    border: 1px;
+    text-align: center;
+    }
+
+    
+    #loader {
+ 
+      width: 120px;
+     height: 10px;
+     -webkit-mask:linear-gradient(90deg,#000 70%,#0000 0) 0/20%;
+     background:
+     linear-gradient(#4CAF50 0 0) 0/0% no-repeat
+      #ddd;
+     animation: l4 2s infinite steps(6);
+   }
+
+   
+
+
+  @keyframes l4 {
     100% {background-size:120%}
+    }
+
+     
+    .input-container {
+    width: 94%;
+    position: relative;
+    display: inline-block;
+    margin-left: 26px;
 }
 
+.currency-symbol {
+    position: absolute;
+    top: 30%;
+    left: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Allows clicking through the symbol */
+}
 
+#desired-price {
+    padding-left: 20px; /* Adjust to accommodate the width of the currency symbol */
+}
+
+#tab-2
+{
+  min-height: 310px;
+  max-height: 420px;
+}
   </style>
 </head>
 <body>
   <div class="tabs">
-    <div class="tab active" data-tab="tab-1">
-       Product Insert</div>
-       <div></div>
+    <div class="tab active" data-tab="tab-1">Product Insert</div>
+    <div></div>
     <div class="tab" data-tab="tab-2">Wish List Products</div>
   </div>
 
   <div id="tab-1" class="tab-content active">
     <div class="grid-container"> 
-        <div class="grid-item"><img src="images/sample.png"  width="54px" height="60px"/> </div>
-        <div class="grid-item"><h1>Shopping Tracker</h1></div>
+      <div class="grid-item"><img src="images/sample128.png" width="54px" height="60px"/></div>
+      <div class="grid-item"><h1 style="font-size: medium; margin-right:10%;">Amazon Shopping Tracker</h1></div>
     </div>
 
     <form id="price-tracker-form">
       <label for="product-url">Product URL:</label>
       <input type="text" id="product-url" required>
       <label for="desired-price">Desired Price:</label>
-      <input type="number" id="desired-price" required>
+      <div class="input-container">
+        <span class="currency-symbol"></span>
+        <input type="number" id="desired-price" required>
+    </div>
       <button  id="price_submit" type="submit">Submit</button>
       <div id="loader" hidden="true"> </div>
       <br>
@@ -155,8 +220,11 @@
   </div>
 
   <div id="tab-2" class="tab-content">
-    <h1>Track Products</h1>
-    <ul id="product-list" class="product-list"></ul>
+    <div class="grid-container"> 
+      <div class="grid-item"><img src="images/wish_list.png" width="54px" height="35px"/></div>
+      <div class="grid-item"><h2>Track Wishlist Products</h2></div>
+    </div>
+    <div id="product-list" class="product-list"></div>
   </div>
   <script src="popup.js"></script>
 </body>
